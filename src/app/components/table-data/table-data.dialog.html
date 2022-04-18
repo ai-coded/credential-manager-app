@@ -1,0 +1,72 @@
+<h1 mat-dialog-title></h1>
+<div mat-dialog-content styles="'padding-top':'24'">
+  <p>Edit User: {{data.username}}</p>
+  <mat-form-field [style.width.%]="100">
+    <mat-label>Enter your username</mat-label>
+    <input matInput type="text" [(ngModel)]="data.username" />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+    >
+      <mat-icon class="small">person</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field [style.width.%]="100">
+    <mat-label>Enter your email</mat-label>
+    <input
+      matInput
+      type="text"
+      class="example-right-align"
+      placeholder="@gmail.com"
+      [(ngModel)]="data.email"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+    >
+      <mat-icon class="small">mail</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div>
+  <mat-form-field [style.width.%]="100">
+    <mat-label>Enter your password</mat-label>
+    <input
+      matInput
+      [type]="hide ? 'password' : 'text'"
+      [(ngModel)]="data.password"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+    >
+      <mat-icon class="small"
+        >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon
+      >
+    </button>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <br />
+  <button mat-raised-button cdkFocusInitial color="primary" (click)="add(data)">
+    Create
+  </button>
+  <button
+    mat-raised-button
+    cdkFocusInitial
+    color="primary"
+    (click)="save(data)"
+  >
+    Edit
+  </button>
+</div>

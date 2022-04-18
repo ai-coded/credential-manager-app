@@ -1,0 +1,80 @@
+<mat-toolbar class="mat-elevation-z8">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'side'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+  <div class="separator">{{ appName }}</div>
+  <span class="example-spacer"></span>
+  <button mat-icon-button aria-label="Example icon-button with menu icon">
+    <mat-icon
+      matTooltip="Info about the action"
+      aria-hidden="false"
+      aria-label="Example user verified icon"
+      matBadge="{{ numberCredentials }}"
+      matBadgeColor="warn"
+      >fingerprint
+    </mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Example icon-button with menu icon">
+    <mat-icon
+      matTooltip="Info about the action"
+      aria-hidden="false"
+      aria-label="Example user verified icon"
+      matBadge="{{ numberCredentials }}"
+      matBadgeColor="warn"
+      >format_color_fill
+    </mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    aria-label="Example icon-button with menu icon"
+    (click)="logout()"
+  >
+    <mat-icon
+      matTooltip="Info about the action"
+      aria-hidden="false"
+      aria-label="Example user verified icon"
+      svgIcon="logout"
+    ></mat-icon>
+  </button>
+</mat-toolbar>
+<div class="flexer"></div>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8" mode="side">
+    <img class="avatar mat-elevation-z8" src="../../../assets/img/user.jpg" />
+    <h4 class="name">{{ user.username }}</h4>
+    <p class="designation">{{ user.email }}</p>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" [routerLink]="['page1']">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="['mailer']">
+      <mat-icon>send</mat-icon>
+      <span>Mail</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="['data']">
+      <mat-icon>storage</mat-icon>
+      <span>Data</span>
+    </button>
+
+    <button mat-button class="menu-button">
+      <mat-icon matBadgePosition="before" matBadge="1" matBadgeColor="warn"
+        >settings</mat-icon
+      >
+      <span>Settings</span>
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

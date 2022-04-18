@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~normalize.css/normalize.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import './assets/fonts/material-icons/material-icons.css';
+@import '@angular/cdk/overlay-prebuilt.css';
+
+body {
+  background-image: url('./assets/img/material.png');
+  background-repeat: no-repeat;
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+  align-items: center;}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+@media only screen and (min-width: 601px) {
+  mat-sidenav.app-sidenav mat-list-item.mat-list-item>div {
+    padding-left: 38px !important;
+  }
+}

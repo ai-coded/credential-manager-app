@@ -1,0 +1,140 @@
+<div class="example-container mat-elevation-z8">
+  <!-- Toolbar above table -->
+  <mat-toolbar class="mat-elevation-z8">
+    <span class="spacer"></span>
+    <button mat-icon-button aria-label="Example icon-button with menu icon">
+      <mat-icon
+        matTooltip="Info about the action"
+        aria-hidden="false"
+        aria-label="Example user verified icon"
+        matBadgeColor="warn"
+        >person_add
+      </mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with menu icon">
+      <mat-icon
+        matTooltip="Info about the action"
+        aria-hidden="false"
+        aria-label="Example user verified icon"
+        matBadgeColor="warn"
+        >edit
+      </mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with menu icon">
+      <mat-icon
+        matTooltip="Info about the action"
+        aria-hidden="false"
+        aria-label="Example user verified icon"
+        matBadgeColor="warn"
+        >delete
+      </mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with menu icon">
+      <mat-icon
+        matTooltip="Info about the action"
+        aria-hidden="false"
+        aria-label="Example user verified icon"
+        matBadgeColor="warn"
+        >sort
+      </mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with menu icon">
+      <mat-icon
+        matTooltip="Info about the action"
+        aria-hidden="false"
+        aria-label="Example user verified icon"
+      >
+        autorenew</mat-icon
+      >
+    </button>
+
+    <button mat-icon-button aria-label="Example icon-button with menu icon">
+      <mat-icon
+        matTooltip="Info about the action"
+        aria-hidden="false"
+        aria-label="Example user verified icon"
+        (click)="exporter.exportTable('json')"
+      >
+        file_download</mat-icon
+      >
+    </button>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voice mail</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <mat-table
+    [dataSource]="dataSource"
+    matSort
+    class="full-width"
+    matTableExporter
+    #exporter="matTableExporter"
+  >
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox class="example-margin"></mat-checkbox
+      ></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="username">
+      <mat-header-cell mat-sort-header *matHeaderCellDef
+        >Username</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">
+        <div>{{ row.username }}</div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="password">
+      <mat-header-cell mat-sort-header *matHeaderCellDef
+        >Password</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">
+        <div>{{ row.password }}</div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Email</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <div>{{ row.email }}</div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="created at">
+      <mat-header-cell *matHeaderCellDef>created at</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <div>{{ row.createdAt | date: "mediumDate" }}</div>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: columnsToDisplay"
+      class="element-row"
+    ></mat-row>
+  </mat-table>
+</div>
+
+<ng-http-loader
+  [minDuration]="500"
+  spinner="sk-wave"
+  [backgroundColor]="'#fff'"
+  [backdropBackgroundColor]="'rgb(49, 48, 48)'"
+></ng-http-loader>

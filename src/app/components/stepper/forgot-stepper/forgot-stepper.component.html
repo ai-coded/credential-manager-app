@@ -1,0 +1,77 @@
+<div class="content mat-elevation-z8">
+  <mat-toolbar>
+    <span class="spacer"></span>
+    <button
+      mat-icon-button
+      class="menu-button"
+      matTooltip="edit mode"
+      (click)="isLinear = !isLinear"
+    >
+      <mat-icon matBadgeColor="warn">edit</mat-icon>
+    </button>
+    <button mat-icon-button class="menu-button" matTooltip="register">
+      <mat-icon matBadgeColor="warn">priority_high</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="menu-button"
+      (click)="gotoRegister()"
+      matTooltip="forgot password"
+    >
+      <mat-icon matBadgeColor="warn">person_add</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-vertical-stepper orientation="vertical" [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            placeholder="Last name, First name"
+            formControlName="firstCtrl"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out your password</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input
+            type="password"
+            matInput
+            formControlName="secondCtrl"
+            placeholder="Password"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <div>
+        <button mat-button (click)="gotoLogin()">Login</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
+
+<ng-http-loader
+  [minDuration]="500"
+  spinner="sk-wave"
+  [backgroundColor]="'#fff'"
+  [backdropBackgroundColor]="'rgb(49, 48, 48)'"
+></ng-http-loader>

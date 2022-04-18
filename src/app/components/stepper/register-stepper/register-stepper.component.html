@@ -1,0 +1,141 @@
+<div class="content mat-elevation-z8">
+  <mat-toolbar>
+    <span class="spacer"></span>
+    <button mat-icon-button class="menu-button">
+      <mat-icon matBadgeColor="warn" [routerLink]="['/forgot']">edit</mat-icon>
+    </button>
+    <button mat-icon-button class="menu-button">
+      <mat-icon matBadgeColor="warn" [routerLink]="['/login']"
+        >fingerprint</mat-icon
+      >
+    </button>
+    <button mat-icon-button class="menu-button">
+      <mat-icon matBadgeColor="warn" [routerLink]="['/register']"
+        >more_vert</mat-icon
+      >
+    </button>
+  </mat-toolbar>
+  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+    <mat-step
+      [stepControl]="firstFormGroup"
+      errorMessage="Full Name is required."
+    >
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out your full name</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Full Name</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Full Name"
+            formControlName="firstCtrl"
+            required
+          />
+        </mat-form-field>
+
+        <div>
+          <mat-checkbox class="example-margin" [(ngModel)]="checked"
+            >I'm a an administrator</mat-checkbox
+          >
+        </div>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step
+      [stepControl]="secondFormGroup"
+      errorMessage="User Name is required."
+    >
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out your username</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="secondCtrl"
+            placeholder="username"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step
+      [stepControl]="thirdFormGroup"
+      errorMessage="Password is required."
+    >
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Fill out your password</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="thirdCtrl"
+            placeholder="password"
+            required
+          />
+        </mat-form-field>
+      </form>
+      <form [formGroup]="fifthFormGroup">
+        <ng-template matStepLabel>Fill out your password</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="fifthCtrl"
+            placeholder="password"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="fourthFormGroup" errorMessage="Email is required.">
+      <form [formGroup]="fourthFormGroup">
+        <ng-template matStepLabel>Fill out your email</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="fourthCtrl"
+            placeholder="email"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button (click)="register()">Register</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>
+
+<ng-http-loader
+  [minDuration]="500"
+  spinner="sk-wave"
+  [backgroundColor]="'#fff'"
+  [backdropBackgroundColor]="'rgb(49, 48, 48)'"
+></ng-http-loader>
