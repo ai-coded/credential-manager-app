@@ -17,6 +17,7 @@
         aria-hidden="false"
         aria-label="Example user verified icon"
         svgIcon="refresh"
+        (click)="ngOnInit()"
       >
       </mat-icon>
     </button>
@@ -36,21 +37,22 @@
       mat-icon-button
       [matMenuTriggerFor]="menu"
       aria-label="Example icon-button with a menu"
+      (click)="messageParent()"
     >
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>dialpad</mat-icon>
-        <span>Redial</span>
+      <button mat-menu-item (click)="copyUsername()">
+        <mat-icon>person</mat-icon>
+        <span>Copy Username</span>
       </button>
-      <button mat-menu-item disabled>
-        <mat-icon>voicemail</mat-icon>
-        <span>Check voice mail</span>
+      <button mat-menu-item (click)="copyPassword()">
+        <mat-icon>fingerprint</mat-icon>
+        <span>Copy Password</span>
       </button>
-      <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
-        <span>Disable alerts</span>
+      <button mat-menu-item (click)="copyEmail()">
+        <mat-icon>mail</mat-icon>
+        <span>Copy Email</span>
       </button>
     </mat-menu>
   </mat-toolbar>
@@ -145,7 +147,7 @@
         <button
           mat-icon-button
           matTooltip="Delete credential"
-          (click)="remove(row)"
+          (click)="remove(row, $event)"
         >
           <mat-icon>delete</mat-icon>
         </button>

@@ -1,4 +1,4 @@
-import { MatSort, MatSortable } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MS, STRING } from '../../config/constant';
 import { MatDialog } from '@angular/material/dialog';
 import { IUser } from '../../providers/api/interface';
@@ -8,6 +8,9 @@ import { ApiService } from '../../providers/api/api.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { IconService } from '../../providers/icon/Icon.service';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { first } from '../../utils/function';
+import { SharedService } from '../../providers/shared/shared.service';
 
 @Component({
   selector: 'app-table-data',
@@ -28,14 +31,23 @@ export class TableDataComponent implements OnInit {
   USER_DATA: IUser[] = [];
   dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
   selection = new SelectionModel<IUser>(true, []);
+  value = this.selection.selected;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     public dialog: MatDialog,
     private apiService: ApiService<IUser>,
-    private iconService: IconService
+    private iconService: IconService,
+    private clipboard: Clipboard,
+    private service: SharedService
   ) {
     this.iconService.registerSvgIcon('refresh', 'refresh');
+    this.service.emitData(this.dataSource.data.length);
+  }
+
+  messageParent() {
+    this.service.emitData(this.dataSource.data.length);
   }
 
   ngOnInit() {
@@ -107,6 +119,7 @@ export class TableDataComponent implements OnInit {
         this.dataSource.data = this.dataSource.data.filter(
           (item) => item !== element
         );
+        this.service.emitData(this.dataSource.data.length);
       },
       (reason) => console.log(reason)
     );
@@ -115,5 +128,15 @@ export class TableDataComponent implements OnInit {
   refresh() {
     this.dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
     this.dataSource.sortData(this.USER_DATA, this.sort);
+  }
+
+  copyUsername() {
+    this.clipboard.copy(first(this.selection.selected).username);
+  }
+  copyPassword() {
+    this.clipboard.copy(first(this.selection.selected).password);
+  }
+  copyEmail() {
+    this.clipboard.copy(first(this.selection.selected).email);
   }
 }

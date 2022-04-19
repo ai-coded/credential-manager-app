@@ -6,6 +6,7 @@ import { MS } from '../../config/constant';
 import { ApiService } from '../../providers/api/api.service';
 import { LocalStorageService } from '../../providers/storage/local-storage.service';
 import { IconService } from '../../providers/icon/Icon.service';
+import { SharedService } from '../../providers/shared/shared.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -25,9 +26,13 @@ export class SidenavComponent implements OnInit {
     private apiService: ApiService<number>,
     private localStorageService: LocalStorageService,
     private router: Router,
-    private iconService: IconService
+    private iconService: IconService,
+    private service: SharedService
   ) {
     this.iconService.registerSvgIcons(this.icons);
+    this.service.subject.subscribe({
+      next: (x) => (this.numberCredentials = x),
+    });
   }
 
   ngOnInit(): void {
