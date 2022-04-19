@@ -17,10 +17,6 @@ export class TableDataDialog {
     private apiService: ApiService<any>
   ) {}
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
   add(row) {
     this.apiService.create(`${MS.USER.BASE_URL}`, row).subscribe((d) => {
       this.dialogRef.close();

@@ -7,6 +7,7 @@
         matTooltip="Info about the action"
         aria-hidden="false"
         aria-label="Example user verified icon"
+        (click)="refresh()"
         >sort
       </mat-icon>
     </button>
@@ -15,9 +16,9 @@
         matTooltip="Info about the action"
         aria-hidden="false"
         aria-label="Example user verified icon"
+        svgIcon="refresh"
       >
-        autorenew</mat-icon
-      >
+      </mat-icon>
     </button>
 
     <button mat-icon-button aria-label="Example icon-button with menu icon">
@@ -84,7 +85,7 @@
     </ng-container>
 
     <ng-container matColumnDef="username">
-      <mat-header-cell mat-sort-header *matHeaderCellDef
+      <mat-header-cell mat-sort-header *matHeaderCellDef (click)="refresh()"
         >Username</mat-header-cell
       >
       <mat-cell *matCellDef="let row">
@@ -92,7 +93,7 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="password">
-      <mat-header-cell mat-sort-header *matHeaderCellDef
+      <mat-header-cell mat-sort-header *matHeaderCellDef (click)="refresh()"
         >Password</mat-header-cell
       >
       <mat-cell *matCellDef="let row">
@@ -100,12 +101,14 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="email">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Email</mat-header-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef (click)="refresh()"
+        >Email</mat-header-cell
+      >
       <mat-cell *matCellDef="let row">
         <div>{{ row.email }}</div>
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="created at">
+    <ng-container matColumnDef="created at" (click)="refresh()">
       <mat-header-cell *matHeaderCellDef mat-sort-header
         >Created at</mat-header-cell
       >
@@ -127,11 +130,15 @@
           <mat-icon
             matTooltip="Add credential"
             aria-hidden="false"
-            (click)="open(row)"
+            (click)="create(row)"
             >person_add
           </mat-icon>
         </button>
-        <button mat-icon-button matTooltip="Edit credential">
+        <button
+          mat-icon-button
+          matTooltip="Edit credential"
+          (click)="edit(row)"
+        >
           <mat-icon>edit</mat-icon>
         </button>
 

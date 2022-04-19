@@ -7,6 +7,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../../providers/api/api.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+import { IconService } from '../../providers/icon/Icon.service';
 
 @Component({
   selector: 'app-table-data',
@@ -15,7 +16,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class TableDataComponent implements OnInit {
   isLoading = true;
-  checked = false;
   columnsToDisplay: string[] = [
     'select',
     'username',
@@ -27,14 +27,16 @@ export class TableDataComponent implements OnInit {
   currentTitle: string;
   USER_DATA: IUser[] = [];
   dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
-  today: any;
   selection = new SelectionModel<IUser>(true, []);
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     public dialog: MatDialog,
-    private apiService: ApiService<IUser>
-  ) {}
+    private apiService: ApiService<IUser>,
+    private iconService: IconService
+  ) {
+    this.iconService.registerSvgIcon('refresh', 'refresh');
+  }
 
   ngOnInit() {
     this.apiService.readAll(MS.USER.BASE_URL).subscribe((d) => {
@@ -74,8 +76,7 @@ export class TableDataComponent implements OnInit {
     return this.selection.selected.length > 0;
   }
 
-  open(row) {
-    alert(row);
+  create(row) {
     row = {
       id: row._id,
       username: STRING.EMPTY,
@@ -83,7 +84,20 @@ export class TableDataComponent implements OnInit {
       email: STRING.EMPTY,
       row,
     };
-    this.openDialog(row);
+    this.edit(row);
+  }
+
+  edit(row): void {
+    this.dialog.open(TableDataDialog, {
+      width: '35%',
+      data: {
+        id: row.id,
+        username: row.username,
+        password: row.password,
+        email: row.email,
+        role: STRING.BASE_ROLE,
+      },
+    });
   }
 
   remove(element) {
@@ -94,20 +108,12 @@ export class TableDataComponent implements OnInit {
           (item) => item !== element
         );
       },
-      (reason) => alert(reason.statusText)
+      (reason) => console.log(reason)
     );
   }
 
-  openDialog(row): void {
-    this.dialog.open(TableDataDialog, {
-      width: '35%',
-      data: {
-        id: row._id,
-        username: row.username,
-        password: row.password,
-        email: row.email,
-        role: STRING.BASE_ROLE /* hard coded for now */,
-      },
-    });
+  refresh() {
+    this.dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
+    this.dataSource.sortData(this.USER_DATA, this.sort);
   }
 }

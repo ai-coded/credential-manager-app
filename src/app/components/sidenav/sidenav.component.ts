@@ -16,6 +16,8 @@ export class SidenavComponent implements OnInit {
   appName: string = 'Credential Manager';
   numberCredentials: number;
   user: any;
+  icons = ['logout', 'github', 'account', 'google', 'linkedin'];
+
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
   constructor(
@@ -25,11 +27,7 @@ export class SidenavComponent implements OnInit {
     private router: Router,
     private iconService: IconService
   ) {
-    this.iconService.registerSvgIcon('logout', 'logout.svg');
-    this.iconService.registerSvgIcon('github', 'github.svg');
-    this.iconService.registerSvgIcon('account', 'account.svg');
-    this.iconService.registerSvgIcon('google', 'google.svg');
-    this.iconService.registerSvgIcon('linkedin', 'linkedin.svg');
+    this.iconService.registerSvgIcons(this.icons);
   }
 
   ngOnInit(): void {
@@ -62,5 +60,17 @@ export class SidenavComponent implements OnInit {
         this.numberCredentials
       );
     });
+  }
+
+  gotoGithub() {
+    window.open(
+      'https://github.com/christianchiama/credential-manager-app/tree/main'
+    );
+  }
+  gotoGoogle() {
+    window.open('https://www.google.com');
+  }
+  gotoLinkedin() {
+    window.open('https://www.linkedin.com/in/christian-chiama/');
   }
 }
