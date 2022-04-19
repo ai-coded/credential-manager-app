@@ -24,12 +24,9 @@
       matTooltip="Info about the action"
       aria-hidden="false"
       aria-label="Example user verified icon"
-      matBadge="{{ numberCredentials }}"
-      matBadgeColor="warn"
       >format_color_fill
     </mat-icon>
   </button>
-
   <button
     mat-icon-button
     aria-label="Example icon-button with menu icon"
@@ -56,6 +53,10 @@
       <mat-icon>home</mat-icon>
       <span>Home</span>
     </button>
+    <button mat-button class="menu-button" [routerLink]="['page1']">
+      <mat-icon svgIcon="account"></mat-icon>
+      <span>Profile</span>
+    </button>
     <button mat-button class="menu-button" [routerLink]="['mailer']">
       <mat-icon>send</mat-icon>
       <span>Mail</span>
@@ -66,10 +67,24 @@
     </button>
 
     <button mat-button class="menu-button">
-      <mat-icon matBadgePosition="before" matBadge="1" matBadgeColor="warn"
-        >settings</mat-icon
-      >
+      <mat-icon>settings</mat-icon>
       <span>Settings</span>
+    </button>
+
+    <mat-divider></mat-divider>
+    <a href="https://github.com/christianchiama/credential-manager-app">
+      <button mat-button class="menu-button">
+        <mat-icon matBadgePosition="before" svgIcon="github"></mat-icon>
+        <span>Github</span>
+      </button>
+    </a>
+    <button mat-button class="menu-button">
+      <mat-icon matBadgePosition="before" svgIcon="google"></mat-icon>
+      <span>Google</span>
+    </button>
+    <button mat-button class="menu-button">
+      <mat-icon matBadgePosition="before" svgIcon="linkedin"></mat-icon>
+      <span>Linkedin</span>
     </button>
   </mat-sidenav>
   <mat-sidenav-content>

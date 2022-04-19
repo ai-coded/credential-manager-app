@@ -4,7 +4,9 @@
 
   .mat-icon {
     font-size: 28px;
-    margin-right: 18px
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
   }
 }
 
@@ -45,6 +47,8 @@ mat-sidenav-container {
 .menu-button {
   width: 100%;
   display: flex;
+  padding-bottom: 6px;
+  ;
   align-items: center;
   justify-content: flex-start;
   font-size: 1rem;
@@ -113,4 +117,8 @@ mat-divider {
 .flexer {
   height: 8px;
   background-color: #fafafa;
+}
+
+.mat-icon-button {
+  margin-right: 6px;
 }

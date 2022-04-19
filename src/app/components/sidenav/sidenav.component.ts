@@ -26,6 +26,10 @@ export class SidenavComponent implements OnInit {
     private iconService: IconService
   ) {
     this.iconService.registerSvgIcon('logout', 'logout.svg');
+    this.iconService.registerSvgIcon('github', 'github.svg');
+    this.iconService.registerSvgIcon('account', 'account.svg');
+    this.iconService.registerSvgIcon('google', 'google.svg');
+    this.iconService.registerSvgIcon('linkedin', 'linkedin.svg');
   }
 
   ngOnInit(): void {

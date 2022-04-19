@@ -7,34 +7,6 @@
         matTooltip="Info about the action"
         aria-hidden="false"
         aria-label="Example user verified icon"
-        matBadgeColor="warn"
-        >person_add
-      </mat-icon>
-    </button>
-    <button mat-icon-button aria-label="Example icon-button with menu icon">
-      <mat-icon
-        matTooltip="Info about the action"
-        aria-hidden="false"
-        aria-label="Example user verified icon"
-        matBadgeColor="warn"
-        >edit
-      </mat-icon>
-    </button>
-    <button mat-icon-button aria-label="Example icon-button with menu icon">
-      <mat-icon
-        matTooltip="Info about the action"
-        aria-hidden="false"
-        aria-label="Example user verified icon"
-        matBadgeColor="warn"
-        >delete
-      </mat-icon>
-    </button>
-    <button mat-icon-button aria-label="Example icon-button with menu icon">
-      <mat-icon
-        matTooltip="Info about the action"
-        aria-hidden="false"
-        aria-label="Example user verified icon"
-        matBadgeColor="warn"
         >sort
       </mat-icon>
     </button>
@@ -83,18 +55,34 @@
   </mat-toolbar>
 
   <mat-table
+    matSortActive="username"
+    matSortDirection="asc"
     [dataSource]="dataSource"
     matSort
     class="full-width"
     matTableExporter
     #exporter="matTableExporter"
   >
-    <ng-container matColumnDef="position">
-      <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <mat-checkbox class="example-margin"></mat-checkbox
-      ></mat-cell>
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+        >
+        </mat-checkbox>
+      </mat-cell>
     </ng-container>
+
     <ng-container matColumnDef="username">
       <mat-header-cell mat-sort-header *matHeaderCellDef
         >Username</mat-header-cell
@@ -118,7 +106,9 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="created at">
-      <mat-header-cell *matHeaderCellDef>created at</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Created at</mat-header-cell
+      >
       <mat-cell *matCellDef="let row">
         <div>{{ row.createdAt | date: "mediumDate" }}</div>
       </mat-cell>
@@ -129,6 +119,31 @@
       *matRowDef="let row; columns: columnsToDisplay"
       class="element-row"
     ></mat-row>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button aria-label="Example icon-button with menu icon">
+          <mat-icon
+            matTooltip="Add credential"
+            aria-hidden="false"
+            (click)="open(row)"
+            >person_add
+          </mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Edit credential">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          matTooltip="Delete credential"
+          (click)="remove(row)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
   </mat-table>
 </div>
 
