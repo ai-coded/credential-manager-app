@@ -4,5 +4,5 @@ echo "star devserver......."
 
 cd ../Credential\ Manager\ Api
 yarn dev &
-cd ../Credential\ Manager
+cd ../Credential\ Manager\ App
 yarn start

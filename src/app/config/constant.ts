@@ -8,9 +8,6 @@ export const MS = {
     COUNT: '/users/count',
     REGISTER_URL: '/auth/register',
     FORGOT_PASSWORD_URL: 'users/forgot',
-    READ_ALL_URL: '/users',
-    UPDATE_URL: '/users/',
-    DELETE_URL: '/users/',
   },
 };
 
@@ -29,4 +26,5 @@ export const PATH = {
 
 export const STRING = {
   EMPTY: '',
+  BASE_ROLE: '625bcb0dddacbaeb1d2c6a2a', // hard coded role
 };

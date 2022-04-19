@@ -10,6 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class TableDataDialog {
   hide = true;
+  isEditing = false;
   constructor(
     public dialogRef: MatDialogRef<TableDataDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -28,7 +29,7 @@ export class TableDataDialog {
 
   save(row) {
     const id = row.id;
-    this.apiService.update(`${MS.USER.UPDATE_URL}${id}`, row).subscribe((d) => {
+    this.apiService.update(`${MS.USER.BASE_URL}/${id}`, row).subscribe((d) => {
       this.dialogRef.close();
     });
   }

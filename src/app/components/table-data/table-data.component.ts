@@ -1,4 +1,4 @@
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { MS, STRING } from '../../config/constant';
 import { MatDialog } from '@angular/material/dialog';
 import { IUser } from '../../providers/api/interface';
@@ -6,6 +6,7 @@ import { TableDataDialog } from './table-dialog.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../../providers/api/api.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-table-data',
@@ -16,17 +17,18 @@ export class TableDataComponent implements OnInit {
   isLoading = true;
   checked = false;
   columnsToDisplay: string[] = [
-    'position',
+    'select',
     'username',
     'password',
     'email',
     'created at',
+    'action',
   ];
   currentTitle: string;
   USER_DATA: IUser[] = [];
   dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
   today: any;
-
+  selection = new SelectionModel<IUser>(true, []);
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
@@ -45,9 +47,35 @@ export class TableDataComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    setTimeout(() => {
+      this.dataSource.sort = null;
+      this.dataSource.sort = this.sort;
+    }, 50);
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    if (this.isSomeSelected()) {
+      this.selection.clear();
+    } else {
+      this.isAllSelected()
+        ? this.selection.clear()
+        : this.dataSource.data.forEach((row) => this.selection.select(row));
+    }
+  }
+
+  isSomeSelected() {
+    console.log(this.selection.selected);
+    return this.selection.selected.length > 0;
   }
 
   open(row) {
+    alert(row);
     row = {
       id: row._id,
       username: STRING.EMPTY,
@@ -60,13 +88,14 @@ export class TableDataComponent implements OnInit {
 
   remove(element) {
     this.dataSource = new MatTableDataSource<IUser>(this.dataSource.data);
-    this.apiService
-      .delete(`${MS.USER.DELETE_URL}${element.id}`)
-      .subscribe((d) => {
+    this.apiService.delete(`${MS.USER.BASE_URL}/${element.id}`).subscribe(
+      (d) => {
         this.dataSource.data = this.dataSource.data.filter(
           (item) => item !== element
         );
-      });
+      },
+      (reason) => alert(reason.statusText)
+    );
   }
 
   openDialog(row): void {
@@ -77,7 +106,7 @@ export class TableDataComponent implements OnInit {
         username: row.username,
         password: row.password,
         email: row.email,
-        role: '625bcb0dddacbaeb1d2c6a2a' /* hard coded for now */,
+        role: STRING.BASE_ROLE /* hard coded for now */,
       },
     });
   }
