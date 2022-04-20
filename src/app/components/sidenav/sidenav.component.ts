@@ -31,7 +31,7 @@ export class SidenavComponent implements OnInit {
   ) {
     this.iconService.registerSvgIcons(this.icons);
     this.service.subject.subscribe({
-      next: (x) => (this.numberCredentials = x),
+      next: (k) => (this.numberCredentials = k),
     });
   }
 

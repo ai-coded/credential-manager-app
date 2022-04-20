@@ -11,6 +11,8 @@ import { IconService } from '../../providers/icon/Icon.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { first } from '../../utils/function';
 import { SharedService } from '../../providers/shared/shared.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackComponent } from '../snackbar/snack.component';
 
 @Component({
   selector: 'app-table-data',
@@ -40,10 +42,18 @@ export class TableDataComponent implements OnInit {
     private apiService: ApiService<IUser>,
     private iconService: IconService,
     private clipboard: Clipboard,
-    private service: SharedService
+    private service: SharedService,
+    private snackBar: MatSnackBar
   ) {
     this.iconService.registerSvgIcon('refresh', 'refresh');
     this.service.emitData(this.dataSource.data.length);
+    //this.openSnackBar('Error', 'Ok');
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      panelClass: ['default-snackbar'],
+    });
   }
 
   messageParent() {
@@ -51,12 +61,15 @@ export class TableDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.readAll(MS.USER.BASE_URL).subscribe((d) => {
-      // @ts-ignore
-      d.forEach((jsonItem) => this.USER_DATA.push(jsonItem));
-      this.dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
-      this.isLoading = false;
-    });
+    this.apiService.readAll(MS.USER.BASE_URL).subscribe(
+      (d) => {
+        // @ts-ignore
+        d.forEach((jsonItem) => this.USER_DATA.push(jsonItem));
+        this.dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
+        this.isLoading = false;
+      },
+      (r) => this.openSnackBar(r.statusText, 'Ok')
+    );
   }
 
   ngAfterViewInit() {
@@ -108,6 +121,7 @@ export class TableDataComponent implements OnInit {
         password: row.password,
         email: row.email,
         role: STRING.BASE_ROLE,
+        credential: this.dataSource.data.length,
       },
     });
   }
@@ -121,7 +135,7 @@ export class TableDataComponent implements OnInit {
         );
         this.service.emitData(this.dataSource.data.length);
       },
-      (reason) => console.log(reason)
+      (r) => this.openSnackBar(r.statusText, 'Ok')
     );
   }
 

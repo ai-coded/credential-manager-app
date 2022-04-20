@@ -81,3 +81,8 @@ mat-toolbar {
 .mat-icon {
   color: #002b5c;
 }
+
+::ng-deep .default-snackbar {
+  color: #fff;
+  background: #002b5c;
+}

@@ -1,16 +1,16 @@
-/* tslint:disable:no-unused-variable */
+import { TestBed } from '@angular/core/testing';
 
-import { TestBed, async, inject } from '@angular/core/testing';
-import { IconService } from '../src/app/providers/icon/Icon.service';
+import { IconService } from '../src/app/icon.service';
 
-describe('Service: Icon', () => {
+describe('IconService', () => {
+  let service: IconService;
+
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [IconService],
-    });
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(IconService);
   });
 
-  it('should ...', inject([IconService], (service: IconService) => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
-  }));
+  });
 });

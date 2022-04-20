@@ -24,6 +24,7 @@ import { TableDataComponent } from './components/table-data/table-data.component
 import { UniversalAppInterceptor } from './providers/interceptor/universal.interceptor';
 import { ForgotStepperComponent } from './components/stepper/forgot-stepper/forgot-stepper.component';
 import { RegisterStepperComponent } from './components/stepper/register-stepper/register-stepper.component';
+import { SnackComponent } from './components/snackbar/snack.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { RegisterStepperComponent } from './components/stepper/register-stepper/
     LoaderComponent,
     MailerComponent,
     SidenavComponent,
+    SnackComponent,
     SettingsComponent,
     TableDataComponent,
     LoginStepperComponent,
