@@ -15,8 +15,19 @@ export class IconService {
     this.matIconRegistry.addSvgIcon(
       iconName,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        `../../../assets/svg/${iconFileName}`
+        `../../../assets/svg/${iconFileName}.svg`
       )
     );
+  }
+
+  registerSvgIcons(iconName: string[]) {
+    iconName.map((i) => {
+      this.matIconRegistry.addSvgIcon(
+        i,
+        this.domSanitizer.bypassSecurityTrustResourceUrl(
+          `../../../assets/svg/${i}.svg`
+        )
+      );
+    });
   }
 }

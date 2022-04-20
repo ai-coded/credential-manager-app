@@ -1,4 +1,4 @@
-import { MatSort, MatSortable } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MS, STRING } from '../../config/constant';
 import { MatDialog } from '@angular/material/dialog';
 import { IUser } from '../../providers/api/interface';
@@ -7,6 +7,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../../providers/api/api.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+import { IconService } from '../../providers/icon/Icon.service';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { first } from '../../utils/function';
+import { SharedService } from '../../providers/shared/shared.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackComponent } from '../snackbar/snack.component';
 
 @Component({
   selector: 'app-table-data',
@@ -15,7 +21,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class TableDataComponent implements OnInit {
   isLoading = true;
-  checked = false;
   columnsToDisplay: string[] = [
     'select',
     'username',
@@ -27,22 +32,40 @@ export class TableDataComponent implements OnInit {
   currentTitle: string;
   USER_DATA: IUser[] = [];
   dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
-  today: any;
   selection = new SelectionModel<IUser>(true, []);
+  value = this.selection.selected;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     public dialog: MatDialog,
-    private apiService: ApiService<IUser>
-  ) {}
+    private apiService: ApiService<IUser>,
+    private iconService: IconService,
+    private clipboard: Clipboard,
+    private service: SharedService,
+    private snackBar: MatSnackBar
+  ) {
+    this.iconService.registerSvgIcon('refresh', 'refresh');
+    this.service.emitData(this.dataSource.data.length);
+    //this.openSnackBar('Error', 'Ok');
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      panelClass: ['default-snackbar'],
+    });
+  }
 
   ngOnInit() {
-    this.apiService.readAll(MS.USER.BASE_URL).subscribe((d) => {
-      // @ts-ignore
-      d.forEach((jsonItem) => this.USER_DATA.push(jsonItem));
-      this.dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
-      this.isLoading = false;
-    });
+    this.apiService.readAll(MS.USER.BASE_URL).subscribe(
+      (d) => {
+        // @ts-ignore
+        d.forEach((jsonItem) => this.USER_DATA.push(jsonItem));
+        this.dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
+        this.isLoading = false;
+      },
+      (r) => this.openSnackBar(r.statusText, 'Ok')
+    );
   }
 
   ngAfterViewInit() {
@@ -74,16 +97,38 @@ export class TableDataComponent implements OnInit {
     return this.selection.selected.length > 0;
   }
 
-  open(row) {
-    alert(row);
+  create(row) {
     row = {
       id: row._id,
       username: STRING.EMPTY,
       password: STRING.EMPTY,
       email: STRING.EMPTY,
+      firstname: STRING.EMPTY,
+      lastname: STRING.EMPTY,
+      fullName: STRING.EMPTY,
       row,
     };
-    this.openDialog(row);
+    this.edit(row);
+  }
+
+  edit(row): void {
+    this.dialog.open(TableDataDialog, {
+      width: '35%',
+      data: {
+        id: row.id,
+        username: row.username,
+        password: row.password,
+        email: row.email,
+        role: STRING.BASE_ROLE,
+        credential: this.dataSource.data.length,
+        firstname: row.firstname,
+        lastname: row.lastname,
+        fullName:
+          (row.firstname || STRING.EMPTY.trim()) +
+          (row.firstname ? ' ' : '') +
+          (row.lastname || STRING.EMPTY.trim()),
+      },
+    });
   }
 
   remove(element) {
@@ -93,21 +138,24 @@ export class TableDataComponent implements OnInit {
         this.dataSource.data = this.dataSource.data.filter(
           (item) => item !== element
         );
+        this.service.emitData(this.dataSource.data.length);
       },
-      (reason) => alert(reason.statusText)
+      (r) => this.openSnackBar(r.statusText, 'Ok')
     );
   }
 
-  openDialog(row): void {
-    this.dialog.open(TableDataDialog, {
-      width: '35%',
-      data: {
-        id: row._id,
-        username: row.username,
-        password: row.password,
-        email: row.email,
-        role: STRING.BASE_ROLE /* hard coded for now */,
-      },
-    });
+  refresh() {
+    this.dataSource = new MatTableDataSource<IUser>([...this.USER_DATA]);
+    this.dataSource.sortData(this.USER_DATA, this.sort);
+  }
+
+  copyUsername() {
+    this.clipboard.copy(first(this.selection.selected).username);
+  }
+  copyPassword() {
+    this.clipboard.copy(first(this.selection.selected).password);
+  }
+  copyEmail() {
+    this.clipboard.copy(first(this.selection.selected).email);
   }
 }

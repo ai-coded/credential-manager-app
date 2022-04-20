@@ -43,7 +43,10 @@
 <div class="flexer"></div>
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8" mode="side">
-    <img class="avatar mat-elevation-z8" src="../../../assets/img/user.jpg" />
+    <img
+      class="avatar mat-elevation-z8"
+      src="../../../assets/img/account.jpg"
+    />
     <h4 class="name">{{ user.username }}</h4>
     <p class="designation">{{ user.email }}</p>
 
@@ -66,23 +69,21 @@
       <span>Data</span>
     </button>
 
-    <button mat-button class="menu-button">
+    <button mat-button class="menu-button" [routerLink]="['settings']">
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
 
     <mat-divider></mat-divider>
-    <a href="https://github.com/christianchiama/credential-manager-app">
-      <button mat-button class="menu-button">
-        <mat-icon matBadgePosition="before" svgIcon="github"></mat-icon>
-        <span>Github</span>
-      </button>
-    </a>
-    <button mat-button class="menu-button">
+    <button mat-button class="menu-button" (click)="gotoGithub()">
+      <mat-icon matBadgePosition="before" svgIcon="github"></mat-icon>
+      <span>Github</span>
+    </button>
+    <button mat-button class="menu-button" (click)="gotoGoogle()">
       <mat-icon matBadgePosition="before" svgIcon="google"></mat-icon>
       <span>Google</span>
     </button>
-    <button mat-button class="menu-button">
+    <button mat-button class="menu-button" (click)="gotoLinkedin()">
       <mat-icon matBadgePosition="before" svgIcon="linkedin"></mat-icon>
       <span>Linkedin</span>
     </button>
