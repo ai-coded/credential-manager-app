@@ -21,6 +21,7 @@ export const PATH = {
   PAGE2: 'page2',
   TABLE: 'data',
   MAILER: 'mailer',
+  SETTINGS: 'settings',
   ALL: '**',
 };
 

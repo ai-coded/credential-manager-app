@@ -13,13 +13,14 @@ export class TableDataDialog {
   hide = true;
   isEditing = false;
   constructor(
-    public dialogRef: MatDialogRef<TableDataDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<TableDataDialog>,
     private apiService: ApiService<any>,
     private service: SharedService
   ) {}
 
   add(row) {
+    console.log(row);
     this.apiService.create(`${MS.USER.BASE_URL}`, row).subscribe((d) => {
       this.dialogRef.close();
     });

@@ -2,7 +2,7 @@
   box-sizing: border-box;
 
   .mat-icon.small {
-    font-size: 24px !important;
+    font-size: 20px !important;
 
   }
 }
@@ -71,8 +71,10 @@ mat-form-field {
 }
 
 .mat-column-action {
-  max-width: 156px;
+  max-width: 196px;
 }
+
+
 
 mat-toolbar {
   background-color: #ffffff;

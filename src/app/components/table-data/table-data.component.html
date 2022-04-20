@@ -37,7 +37,6 @@
       mat-icon-button
       [matMenuTriggerFor]="menu"
       aria-label="Example icon-button with a menu"
-      (click)="messageParent()"
     >
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -115,7 +114,7 @@
         >Created at</mat-header-cell
       >
       <mat-cell *matCellDef="let row">
-        <div>{{ row.createdAt | date: "mediumDate" }}</div>
+        <div>{{ row.createdAt | date: "longDate" }}</div>
       </mat-cell>
     </ng-container>
 

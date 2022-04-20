@@ -5,6 +5,7 @@ import { Page1Component } from './page1/page1.component';
 import { Page2Component } from './page2/page2.component';
 import { MailerComponent } from './components/mailer/mailer.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { TableDataComponent } from './components/table-data/table-data.component';
 import { LoginStepperComponent } from './components/stepper/login-stepper/login-stepper.component';
 import { ForgotStepperComponent } from './components/stepper/forgot-stepper/forgot-stepper.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: PATH.PAGE2, component: Page2Component },
       { path: PATH.TABLE, component: TableDataComponent },
       { path: PATH.MAILER, component: MailerComponent },
+      { path: PATH.SETTINGS, component: SettingsComponent },
     ],
   },
   {

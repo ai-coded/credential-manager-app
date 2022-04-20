@@ -56,10 +56,6 @@ export class TableDataComponent implements OnInit {
     });
   }
 
-  messageParent() {
-    this.service.emitData(this.dataSource.data.length);
-  }
-
   ngOnInit() {
     this.apiService.readAll(MS.USER.BASE_URL).subscribe(
       (d) => {
@@ -107,6 +103,9 @@ export class TableDataComponent implements OnInit {
       username: STRING.EMPTY,
       password: STRING.EMPTY,
       email: STRING.EMPTY,
+      firstname: STRING.EMPTY,
+      lastname: STRING.EMPTY,
+      fullName: STRING.EMPTY,
       row,
     };
     this.edit(row);
@@ -122,6 +121,12 @@ export class TableDataComponent implements OnInit {
         email: row.email,
         role: STRING.BASE_ROLE,
         credential: this.dataSource.data.length,
+        firstname: row.firstname,
+        lastname: row.lastname,
+        fullName:
+          (row.firstname || STRING.EMPTY.trim()) +
+          (row.firstname ? ' ' : '') +
+          (row.lastname || STRING.EMPTY.trim()),
       },
     });
   }
