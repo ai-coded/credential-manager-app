@@ -26,6 +26,7 @@ export class TableDataComponent implements OnInit {
     'username',
     'password',
     'email',
+    'provider',
     'created at',
     'action',
   ];

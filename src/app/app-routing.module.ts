@@ -13,10 +13,9 @@ import { RegisterStepperComponent } from './components/stepper/register-stepper/
 
 const routes: Routes = [
   {
-    path: PATH.APP,
-    component: SidenavComponent,
+    path: PATH.APP, component: SidenavComponent,
     children: [
-      { path: PATH.PAGE1, component: Page1Component },
+      { path: PATH.PAGE1, component: TableDataComponent },
       { path: PATH.PAGE2, component: Page2Component },
       { path: PATH.TABLE, component: TableDataComponent },
       { path: PATH.MAILER, component: MailerComponent },

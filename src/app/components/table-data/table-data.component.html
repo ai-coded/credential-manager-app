@@ -109,6 +109,14 @@
         <div>{{ row.email }}</div>
       </mat-cell>
     </ng-container>
+        <ng-container matColumnDef="provider" (click)="refresh()">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Provider</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">
+        <div>{{ row.createdAt | date: "longDate" }}</div>
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="created at" (click)="refresh()">
       <mat-header-cell *matHeaderCellDef mat-sort-header
         >Created at</mat-header-cell

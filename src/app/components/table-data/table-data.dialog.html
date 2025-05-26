@@ -2,13 +2,6 @@
 <div mat-dialog-content styles="'padding-top':'24'">
   <p>Edit User: {{data.username}}</p>
   <mat-form-field [style.width.%]="100">
-    <mat-label>Enter your full name</mat-label>
-    <input matInput type="text" [(ngModel)]="data.fullName" />
-    <button mat-icon-button matSuffix>
-      <mat-icon class="small">person</mat-icon>
-    </button>
-  </mat-form-field>
-  <mat-form-field [style.width.%]="100">
     <mat-label>Enter your username</mat-label>
     <input matInput type="text" [(ngModel)]="data.username" />
     <button mat-icon-button matSuffix>
